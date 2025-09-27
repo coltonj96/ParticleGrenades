@@ -1,0 +1,32 @@
+name: ParticleGrenades
+main: com.aim.coltonjgriswold.pg.ParticleGrenades
+author: 'Colton Griswold'
+version: 0.3.5
+api-version: '1.20'
+website: https://www.spigotmc.org/resources/particlegrenades.49669/
+depend: [ParticleProjectileApi]
+soft-depend: [WorldGuard]
+
+commands:
+  pgreload:
+    description: Reloads Particle Grenades Config
+    usage: /pgreload
+    permission: particlegrenades.reload
+  pglist:
+    description: List availble grenades
+    usage: /pglist
+    permission: particlegrenades.list
+  pggive:
+    description: Gives specified amount of grenade (defaults to 64)
+    usage: /pglist <grenade> [amount]
+    permission: particlegrenades.give
+  pgspawn:
+    description: Spawns specified grenade at coordinates
+    usage: /pgspawn <grenade> <x> <y> <z>
+    permission: particlegrenades.spawn
+    
+permissions:
+  particlegrenades.reload:
+    description: Enable use of '/pgreload'
+  particlegrenades.list:
+    description: Enable use of '/pglist'

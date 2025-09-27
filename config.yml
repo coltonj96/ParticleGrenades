@@ -1,0 +1,277 @@
+# List of all ingredients (Materials), effects, particles, and sounds can be found in the auto-generated materials.txt, effects.txt, particles.txt, and sounds.txt
+# All times are in ticks (20 ticks = 1 second)
+# Colorable particle types: REDSTONE, SPELL_MOB, and SPELL_MOB_AMBIENT
+
+# Internal name of grenade and permission ('particlegrenades.use.default' and 'particlegrenades.give.default')
+default:
+
+  # Name that will be displayed on the crafted item
+  name: '&4&lGrenade'
+
+  # Each line will be a line of lore on the item
+  description:
+    - '&6A throwable explosive'
+    - '&6Warning: &cContains Explosives!'
+
+  # How far the grenade is thrown
+  distance: 1.5
+
+  behavior:
+
+    # Ticks before the grenade explodes
+    fuse: 100
+
+    # Should the grenade explode when a player/mob gets to close?
+    proximity: false
+
+    # If so how close do they need to be?
+    radius: 2.0
+
+    # Should it explode upon hitting something?
+    impact: false
+
+
+  # Time before player is able to throw another of this grenade (In ticks)
+  cooldown: 60
+
+  # Sound of explosion
+  # Format <sound>:<volume>:<pitch>
+  sound: entity.generic.explode:10.0:0.5
+
+  # Potion effects to apply to entities hit by particles
+  #List of effects with format of <effect>:<amplifier>:<duration in ticks>
+  effects:
+    - weakness:1:60
+    - slowness:1:60
+
+  # Settings for particles
+  particles:
+
+    # Explosion particles
+    explosion:
+
+      # List of materials affected by the explosion
+      # A question mark '?' can be used as a wildcard
+      # Using 'RED?' will include 'REDSTONE' but not 'POWERED_RAILS'
+      # Using '?RED' will not include 'REDSTONE' or 'POWERED_RAILS'
+      # Using '?RED?' will include everything with 'RED' in its name
+      # Using '?' will include all blocks
+      # Other available placeholders include:
+      # 'burnable' (Includes all blocks that can burn away
+      # 'flammable' (Includes all blocks that can catch fire)
+      # 'logs', 'leaves' , 'planks' (Are self-explanatory as they include every type they describe)
+      # a hyphen ('-') can be used to negate a certain block/placeholder such as '-logs' will not include any logs
+      # Adding %<#> to the end of a query can add a chance for that material to be effected such as 'stone%10' will add
+      #   a 10 percent chance for stone to be effected
+      blocks:
+
+        # When a particle hits a block...
+        on_hit:
+
+          # Break it naturally IE item drops if applicable
+          break:
+            - leaves
+            - ?stone?
+            - diorite
+            - andesite
+            - granite
+            - dirt
+            - grass_block
+            - logs
+
+          # Converts from one set of blocks to another at random
+          # '?,-logs:air%10' will convert all blocks except logs to air with a 10 percent chance of becoming air
+          convert:
+            - grass_block:dirt
+            - dirt:gravel
+            - gravel:sand
+            - sand:air%50
+
+          # Destroy it by completely removing it
+          destroy:
+            - ?glass%90
+
+          # Throw the block
+          throw:
+            - sand
+
+        # When a particle passes through a block...
+        on_penetrate:
+
+          # Break it naturally IE item drops if applicable
+          break:
+            - leaves
+            - ?grass
+
+          # Convert randomly to one of the following blocks
+          convert: []
+
+          # Destroy it by completely removing it
+          destroy:
+            - ?glass?
+
+          # Do nothing but still go through the block (Can still be thrown)
+          ignore:
+            - water
+
+      # Number of actual projectiles generated (Higher numbers requires more server resources)
+      # (Going higher than 10000 can potentially cause severe server lag)
+      fragments: 512
+
+      # How much damage a particle deals to an entity (1.0 = half heart, can be 0)
+      damage: 1.0
+
+      # Velocity of the explosion particles (In meters per second, 1 block = 3 meters)
+      velocity: 2048.0
+
+      # Time the particle has to exist (seconds) before disappearing
+      lifespan: 0.5
+
+      # Force multiplier of the explosion (Knockback effect upon hitting an entity)
+      force: 1.0
+
+      # Size of the hitbox for particles
+      hitbox: 0.2
+
+      # Explosion particle type
+      # Can use percentages
+      particles:
+        - lava%50
+        - flame
+
+      # Explosion color as a hexadecimal value (If applicable to any particles)
+      color:
+        from: 7f7f00
+        to: 7f7f7f
+
+    # Smoke trail particles
+    smoke:
+
+      # Is smoke enabled?
+      enabled: true
+
+      # Smoke color
+      color: 7f7f7f
+
+  # Recipe for the grenade
+  recipe:
+
+    # Amount of grenades the recipe gives
+    amount: 1
+
+    # Ingredients needed, the first ingredient listed will be 'a' the second 'b', third 'c', and so on (Max of nine ingredients)
+    # the first item on the list is represented be the letter a, b for second and so forth. An empty space can be the letter after the last item
+    ingredients:
+      - iron_ingot
+      - gunpowder
+
+    # Crafting grid using above ingredients letters (Each line may contain up to three different letters and there may only be one to three lines)
+    grid:
+      - cac
+      - aba
+      - cac
+
+smoke:
+  name: '&4&lSmoke Grenade'
+  description:
+    - '&6Creates smoke'
+    - '&6Warning: &cContains Explosives!'
+  distance: 1.25
+  behavior:
+    fuse: 60
+    proximity: false
+    radius: 0.0
+    impact: false
+  cooldown: 60
+  effects: []
+  sound: entity.generic.explode:3.0:1.5
+  particles:
+    explosion:
+      blocks:
+        on_hit:
+          break: []
+          convert: []
+          destroy: []
+          throw: []
+        on_penetrate:
+          break: []
+          convert: []
+          destroy: []
+          ignore: []
+      fragments: 2048
+      damage: 0.0
+      velocity: 1024.0
+      lifespan: 0.2
+      force: 0.0
+      hitbox: 0.2
+      particles:
+        - campfire_signal_smoke
+      color:
+        from: 000000
+        to: 000000
+    smoke:
+      enabled: true
+      color: 7f7f7f
+  recipe:
+    amount: 1
+    ingredients:
+      - gold_ingot
+      - glowstone
+    grid:
+      - cac
+      - aba
+      - cac
+flashbang:
+  name: '&4&lFlash Bang'
+  description:
+    - '&6Blinds for 3 seconds'
+    - '&6Warning: &cContains Explosives!'
+  distance: 2.0
+  behavior:
+    fuse: 30
+    proximity: true
+    radius: 1.0
+    impact: true
+  cooldown: 60
+  sound: entity.generic.explode:4.0:2.0
+  effects:
+    - blindness:10:60
+    - night_vision:10:60
+    - darkness:10:60
+  particles:
+    explosion:
+      blocks:
+        on_hit:
+          break: []
+          convert: []
+          destroy: []
+          throw: []
+        on_penetrate:
+          break: []
+          convert: []
+          destroy: []
+          ignore: []
+      fragments: 1024
+      damage: 0.0
+      velocity: 4096.0
+      lifespan: 0.1
+      force: 0.0
+      hitbox: 0.8
+      particles:
+        - flash
+        - ash
+      color:
+        from: 000000
+        to: 000000
+    smoke:
+      enabled: true
+      color: 7f7f7f
+  recipe:
+    amount: 1
+    ingredients:
+      - iron_ingot
+      - glowstone
+    grid:
+      - cac
+      - aba
+      - cac
